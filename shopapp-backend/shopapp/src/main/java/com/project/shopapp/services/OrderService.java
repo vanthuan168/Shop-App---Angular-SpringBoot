@@ -11,9 +11,11 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -50,21 +52,34 @@ public class OrderService implements IOrderService{
 
     @Override
     public Order getOrder(Long id) {
-        return null;
+        return orderRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Order updateOrder(Long id, OrderDTO orderDTO) {
-        return null;
+    public Order updateOrder(Long id, OrderDTO orderDTO) throws DataNotFoundException{
+        Order order = orderRepository.findById(id)
+                .orElseThrow(()-> new DataNotFoundException("Cannot find order with id = " + id));
+        User existingUser = userRepository.findById(order.getUser().getId())
+                .orElseThrow(()-> new DataNotFoundException("Cannot find user with id = " + id));
+        // Taoj anhs xa orderDTO->order
+        modelMapper.typeMap(OrderDTO.class, Order.class)
+                .addMappings(mapper->mapper.skip(Order::setId));
+        modelMapper.map(orderDTO, order);
+        order.setUser(existingUser);
+        return orderRepository.save(order);
     }
 
     @Override
     public void deleteOrder(Long id) {
-
+        Order order = orderRepository.findById(id).orElse(null);
+        if (order != null){
+            order.setActive(false);
+            orderRepository.save(order);
+        }
     }
 
     @Override
-    public List<Order> getAllOrders(Long userId) {
-        return null;
+    public List<Order> findByUserId(Long userId) {
+        return orderRepository.findByUserId(userId);
     }
 }
