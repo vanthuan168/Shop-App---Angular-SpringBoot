@@ -59,7 +59,7 @@ public class OrderService implements IOrderService{
     public Order updateOrder(Long id, OrderDTO orderDTO) throws DataNotFoundException{
         Order order = orderRepository.findById(id)
                 .orElseThrow(()-> new DataNotFoundException("Cannot find order with id = " + id));
-        User existingUser = userRepository.findById(order.getUser().getId())
+        User existingUser = userRepository.findById(orderDTO.getUserId())
                 .orElseThrow(()-> new DataNotFoundException("Cannot find user with id = " + id));
         // Taoj anhs xa orderDTO->order
         modelMapper.typeMap(OrderDTO.class, Order.class)
