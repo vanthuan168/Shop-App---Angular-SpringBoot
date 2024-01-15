@@ -5,7 +5,6 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data//toString
 @Entity
 @Table(name = "products")
 @Getter

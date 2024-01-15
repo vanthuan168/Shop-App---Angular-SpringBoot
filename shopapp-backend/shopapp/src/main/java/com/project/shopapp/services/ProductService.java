@@ -108,9 +108,10 @@ public class ProductService implements IProductService{
                 .build();
         //Ko cho insert quá 5 ảnh cho 1 sản phẩm
         int size = productImageRepository.findByProductId(productId).size();
-        if(size >= ProductService.MAXIMUM_IMAGES_PER_PRODUCT) {
-            throw new InvalidParamException("Number of images must be <= "
-                    +ProductService.MAXIMUM_IMAGES_PER_PRODUCT);
+        if(size >= ProductImage.MAXIMUM_IMAGES_PER_PRODUCT) {
+            throw new InvalidParamException(
+                    "Number of images must be <= "
+                    +ProductImage.MAXIMUM_IMAGES_PER_PRODUCT);
         }
         return productImageRepository.save(newProductImage);
     }

@@ -32,11 +32,10 @@ public class OrderDetailResponse {
     @JsonProperty("total_money")
     private Float totalMoney;
 
-    @JsonProperty("color")
     private String color;
-
-    public static OrderDetailResponse fromOrderDetail(OrderDetail orderDetail){
-        return OrderDetailResponse.builder()
+    public static OrderDetailResponse fromOrderDetail(OrderDetail orderDetail) {
+        return OrderDetailResponse
+                .builder()
                 .id(orderDetail.getId())
                 .orderId(orderDetail.getOrder().getId())
                 .productId(orderDetail.getProduct().getId())

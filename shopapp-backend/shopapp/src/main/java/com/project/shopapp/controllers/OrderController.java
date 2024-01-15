@@ -36,7 +36,7 @@ public class OrderController {
         }
     }
     @GetMapping("/user/{user_id}") // Thêm biến đường dẫn "user_id"
-    //GET http://localhost:8080/api/v1/orders/user/4
+    //GET http://localhost:8088/api/v1/orders/user/4
     public ResponseEntity<?> getOrders(@Valid @PathVariable("user_id") Long userId) {
         try {
             List<Order> orders = orderService.findByUserId(userId);
@@ -45,9 +45,8 @@ public class OrderController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
-    @GetMapping("/{id}") // Thêm biến đường dẫn "order_id"
-    //GET http://localhost:8080/api/v1/orders/4
+    //GET http://localhost:8088/api/v1/orders/2
+    @GetMapping("/{id}")
     public ResponseEntity<?> getOrder(@Valid @PathVariable("id") Long orderId) {
         try {
             Order existingOrder = orderService.getOrder(orderId);
@@ -62,6 +61,7 @@ public class OrderController {
     public ResponseEntity<?> updateOrder(
             @Valid @PathVariable long id,
             @Valid @RequestBody OrderDTO orderDTO) {
+
         try {
             Order order = orderService.updateOrder(id, orderDTO);
             return ResponseEntity.ok(order);

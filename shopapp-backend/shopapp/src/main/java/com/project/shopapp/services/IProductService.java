@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.project.shopapp.models.*;
 
 public interface IProductService {
-    public static final int MAXIMUM_IMAGES_PER_PRODUCT = 5;
     Product createProduct(ProductDTO productDTO) throws Exception;
     Product getProductById(long id) throws Exception;
     Page<ProductResponse> getAllProducts(PageRequest pageRequest);

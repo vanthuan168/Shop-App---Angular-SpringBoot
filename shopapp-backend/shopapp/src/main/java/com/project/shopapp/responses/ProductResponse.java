@@ -8,26 +8,20 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class ProductResponse extends BaseResponse{
-
     private String name;
-
     private Float price;
-
     private String thumbnail;
-
     private String description;
 
     @JsonProperty("category_id")
     private Long categoryId;
-
-    public static ProductResponse fromProduct(Product product){
+    public static ProductResponse fromProduct(Product product) {
         ProductResponse productResponse = ProductResponse.builder()
                 .name(product.getName())
                 .price(product.getPrice())
@@ -35,8 +29,8 @@ public class ProductResponse extends BaseResponse{
                 .description(product.getDescription())
                 .categoryId(product.getCategory().getId())
                 .build();
-        productResponse.setCreateAt(product.getCreatedAt());
-        productResponse.setUpdateAt(product.getUpdatedAt());
+        productResponse.setCreatedAt(product.getCreatedAt());
+        productResponse.setUpdatedAt(product.getUpdatedAt());
         return productResponse;
     }
 }
